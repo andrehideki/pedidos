@@ -1,0 +1,37 @@
+<h1>Novo Pedido</h1>
+<form [formGroup]="formulario" (submit)="onSubmit()">
+	Fornecedor:
+	<input type="text" name="fornecedor" formControlName="fornecedor"/>
+	<br/>
+	
+	<h3>Produtos - ({{ produtos.value.length }})</h3>
+
+	<button type="button"  (click)="incluirProduto = !incluirProduto">
+		Incluir produto
+	</button>
+	
+	<div *ngIf="incluirProduto">
+		Nome:
+		<input type="text" name="nome" id="nome" formControlName="nome"/>
+		Qtde:
+		<input type="text" name="qtde" id="qtde" formControlName="qtde"/>
+		<button type="button" (click)="incluir()">Incluir</button>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>	
+				<th>Qtd</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let produto of produtos.value">
+				<td>{{ produto.nome }}</td>
+				<td>{{ produto.qtde }}</td>	
+			</tr>
+		<tbody>	
+	</table>
+	<button type="submit">Salvar</button>
+</form>
+{{ formulario.status  | json }}
