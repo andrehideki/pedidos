@@ -9,6 +9,7 @@ import { FormBuilder, FormArray, ValidatorFn, AbstractControl, Validators } from
 export class AppComponent {
   	title = 'pedidos-ui';
 	incluirProduto = false;
+	// osifjiosdafja
 
 	formulario = this.fb.group({
 		fornecedor: ['', Validators.required ],
