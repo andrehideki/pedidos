@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.pedidos-api</groupId>
-	<artifactId>pedidios-api</artifactId>
+	<artifactId>pedidos-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>pedidios-api</name>
 	<description>Gerenciador de pedidos de fornecedores</description>
