@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pedidos.api.model.Historico;
 import br.com.pedidos.api.model.Produto;
+import br.com.pedidos.api.repository.HistoricoRepository;
 import br.com.pedidos.api.repository.ProdutoRepository;
 
 @RestController
@@ -26,6 +28,8 @@ public class ProdutoResource {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private HistoricoRepository historicoRepository;
 	
 	@GetMapping
 	public List<Produto> listar() {
@@ -34,8 +38,12 @@ public class ProdutoResource {
 	
 	@PostMapping
 	public ResponseEntity<?> gravar(@RequestBody @Valid Produto produto) {
-		Produto produtoSalvo = produtoRepository.save(produto);
-		return ResponseEntity.ok(produtoSalvo);
+		
+		Produto salvo = produtoRepository.save(produto);
+		Historico historico = new Historico(salvo);
+		historicoRepository.save(historico);
+			
+		return ResponseEntity.ok(salvo);
 	}
 	
 	@PutMapping("{id}")
@@ -49,12 +57,25 @@ public class ProdutoResource {
 		BeanUtils.copyProperties(produto, salvo, "id");
 		salvo = produtoRepository.save(salvo);
 		
+		Historico historico = new Historico(salvo);
+		historicoRepository.save(historico);
+		
 		return ResponseEntity.ok(salvo);
 	}
 	
 	
 	@DeleteMapping("{id}")
 	public void excluir(@PathVariable Integer id) {
+		List<Historico> historicos = historicoRepository.findByProdutoId(id);
+		for (Historico h: historicos) {
+			historicoRepository.deleteByProduto(h.getProduto());
+		}
 		produtoRepository.deleteById(id);
 	}
+	
+	@GetMapping("historico/{id}")
+	public List<Historico> mostraHistorico(@PathVariable Integer id) {
+		return historicoRepository.findByProdutoId(id);
+	}
+	
 }

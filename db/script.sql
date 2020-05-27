@@ -5,11 +5,11 @@ CREATE TABLE IF NOT EXISTS produto (
 );
 
 CREATE TABLE IF NOT EXISTS hist_prod (
-	id INT IDENTITY PRIMARY KEY,
-	prod_id INT NOT NULL,
-	data DATE NOT NULL,
+	id INT NOT NULL,
+	data TIMESTAMP NOT NULL,
 	valor DOUBLE NOT NULL,
-	FOREIGN KEY(prod_id) REFERENCES produto(id)
+    PRIMARY KEY(id, data),
+	FOREIGN KEY(id) REFERENCES produto(id)
 );
 
 CREATE TABLE IF NOT EXISTS fornecedor (
@@ -20,13 +20,13 @@ CREATE TABLE IF NOT EXISTS fornecedor (
 
 CREATE TABLE IF NOT EXISTS pedido (
 	id INT IDENTITY PRIMARY KEY,
-	data DATE NOT NULL,
+	data TIMESTAMP NOT NULL,
 	forn_id INT NOT NULL,
 	total DOUBLE NOT NULL,
 	FOREIGN KEY(forn_id) REFERENCES fornecedor(id)
 );
 
-CREATE TABLE IF NOT EXISTS form_prod (
+CREATE TABLE IF NOT EXISTS forn_prod (
 	forn_id INT NOT NULL,
 	prod_id INT NOT NULL,
 	PRIMARY KEY(forn_id, prod_id),

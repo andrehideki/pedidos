@@ -2,7 +2,6 @@ package br.com.pedidos.api.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,9 +30,10 @@ public class Produto {
 	
 	@OneToMany
 	@JoinTable(
-		name = "form_prod", 
+		name = "forn_prod",
 		joinColumns = @JoinColumn(
 			name = "prod_id",
+			table = "forn_prod",
 			referencedColumnName = "id"
 		), inverseJoinColumns = @JoinColumn(
 			name = "forn_id",
@@ -41,4 +41,5 @@ public class Produto {
 			referencedColumnName = "id"
 		))
 	private List<Fornecedor> fornecedores;
+	
 }
