@@ -1,9 +1,12 @@
 package br.com.pedidos.api.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +26,16 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	private Date data;
+	
 	@OneToOne
 	@JoinColumn(name = "forn_id")
 	private Fornecedor fornecedor;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="ped_id")
-	private List<Item> itens;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
+	private List<Item> itens = new ArrayList<Item>();
+	
+	private Double total;
+	
+	private String observacao;
 }

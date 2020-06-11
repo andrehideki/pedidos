@@ -23,16 +23,19 @@ CREATE TABLE IF NOT EXISTS pedido (
 	data TIMESTAMP NOT NULL,
 	forn_id INT NOT NULL,
 	total DOUBLE NOT NULL,
+    observacao VARCHAR(255),
 	FOREIGN KEY(forn_id) REFERENCES fornecedor(id)
 );
 
 CREATE TABLE IF NOT EXISTS forn_prod (
 	forn_id INT NOT NULL,
 	prod_id INT NOT NULL,
-	PRIMARY KEY(forn_id, prod_id),
 	FOREIGN KEY(forn_id) REFERENCES fornecedor(id),
 	FOREIGN KEY(prod_id) REFERENCES produto(id)
 );
+
+ALTER TABLE forn_prod
+ADD PRIMARY KEY (forn_id, prod_id);
 
 CREATE TABLE IF NOT EXISTS ped_prod (
 	ped_id INT NOT NULL,
